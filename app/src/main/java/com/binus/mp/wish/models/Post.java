@@ -5,42 +5,42 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public class Post {
-    private UUID ID;
+    private String id;
 
-    private UUID creatorAccountID;
+    private String creator_account_id;
     private String title;
     private String content;
 
-    private Timestamp createdAt;
+    private String created_at;
 
-    private Timestamp updatedAt;
+    private String updated_at;
 
     public Post() {
     }
 
-    public Post(UUID ID, UUID creatorAccountID, String title, String content, Timestamp createdAt, Timestamp updatedAt) {
-        this.ID = ID;
-        this.creatorAccountID = creatorAccountID;
+    public Post(String id, String creator_account_id, String title, String content, String created_at, String updated_at) {
+        this.id = id;
+        this.creator_account_id = creator_account_id;
         this.title = title;
         this.content = content;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
-    public UUID getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(UUID ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public UUID getCreatorAccountID() {
-        return creatorAccountID;
+    public String getCreator_account_id() {
+        return creator_account_id;
     }
 
-    public void setCreatorAccountID(UUID creatorAccountID) {
-        this.creatorAccountID = creatorAccountID;
+    public void setCreator_account_id(String creator_account_id) {
+        this.creator_account_id = creator_account_id;
     }
 
     public String getTitle() {
@@ -59,19 +59,19 @@ public class Post {
         this.content = content;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

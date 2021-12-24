@@ -38,14 +38,15 @@ public class FeedActivity extends AppCompatActivity {
                 }else{
                     List<Post> posts= response.body();
                     String pesan = "";
-                    for(Post post: posts){
-
-                        pesan = "Id : " + post.getID()+"\n";
-                        pesan+= "Title : "+ post.getTitle()+"\n";
-                        pesan+= "Content : " + post.getContent()+"\n";
-                        pesan+= "Creator AccountID : " + post.getCreatorAccountID()+"\n\n";
-                        txtView.append(pesan);
-                    }
+                    txtView.append("Success");
+//                    for(Post post: posts){
+//
+//                        pesan = "Id : " + post.getId()+"\n";
+//                        pesan+= "Title : "+ post.getTitle()+"\n";
+//                        pesan+= "Content : " + post.getContent()+"\n";
+//                        pesan+= "Creator AccountID : " + post.getCreator_account_id()+"\n\n";
+//                        txtView.append(pesan);
+//                    }
 //                    Toast.makeText(FeedActivity.this, pesan, Toast.LENGTH_SHORT).show();
                 }
 
