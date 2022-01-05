@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 public interface JSONPlaceHolderAPI {
 
     @GET("posts")
-    Call<List<Post>> getPosts();
+    Call<PostAPI> getPosts();
 
 
 }
