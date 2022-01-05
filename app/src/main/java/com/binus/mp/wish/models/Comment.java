@@ -1,56 +1,69 @@
 package com.binus.mp.wish.models;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 public class Comment {
-    private UUID ID;
-    private UUID postID;
-
-    private UUID creatorAccountID;
+    private UUID id;
+    @JsonProperty("post_id")
+    private UUID postId;
+    @JsonProperty("creator_account_id")
+    private UUID creatorAccountId;
     private String content;
-
+    @JsonProperty("created_at")
     private Timestamp createdAt;
-
+    @JsonProperty("updated_at")
     private Timestamp updatedAt;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", postId=" + postId +
+                ", creatorAccountId=" + creatorAccountId +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 
     public Comment() {
     }
 
-    public Comment(UUID ID, UUID postID, UUID creatorAccountID, String content, Timestamp createdAt, Timestamp updatedAt) {
-        this.ID = ID;
-        this.postID = postID;
-        this.creatorAccountID = creatorAccountID;
+    public Comment(UUID id, UUID postId, UUID creatorAccountId, String content, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.postId = postId;
+        this.creatorAccountId = creatorAccountId;
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public UUID getID() {
-        return ID;
+    public UUID getId() {
+        return id;
     }
 
-    public void setID(UUID ID) {
-        this.ID = ID;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
 
-    public UUID getPostID() {
-        return postID;
+    public UUID getPostId() {
+        return postId;
     }
 
-    public void setPostID(UUID postID) {
-        this.postID = postID;
+    public void setPostId(UUID postId) {
+        this.postId = postId;
     }
 
-    public UUID getCreatorAccountID() {
-        return creatorAccountID;
+    public UUID getCreatorAccountId() {
+        return creatorAccountId;
     }
 
-    public void setCreatorAccountID(UUID creatorAccountID) {
-        this.creatorAccountID = creatorAccountID;
+    public void setCreatorAccountId(UUID creatorAccountId) {
+        this.creatorAccountId = creatorAccountId;
     }
 
     public String getContent() {
