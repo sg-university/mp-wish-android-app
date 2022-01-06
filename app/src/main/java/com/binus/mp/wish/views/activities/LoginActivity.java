@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d("xxx", credentials.toString());
 
         Controller<AuthenticationApi> controller = new Controller<>(AuthenticationApi.class);
-        Call<Result<Account>> call = controller.getApi().registerByHuaweiOpenId(credentials);
+        Call<Result<Account>> call = controller.getApi().loginByHuaweiOpenId(credentials);
         call.enqueue(new Callback<Result<Account>>() {
             @Override
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {

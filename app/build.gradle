@@ -19,7 +19,7 @@ android {
 
     signingConfigs {
         config {
-            storeFile file('C:\\Data\\University\\Semester 5\\Mobile Programming\\Final Project\\wish-key-store.jks')
+            storeFile file('C:/Users/BATARI/AndroidStudioProjects/mp-wish-android-app/wish-key-store.jks')
             storePassword 'binusmpwish'
             keyPassword 'binusmpwish'
             keyAlias 'wish-key-store'
