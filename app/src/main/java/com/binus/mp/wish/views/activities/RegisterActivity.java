@@ -125,13 +125,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Account account = result.getContent();
                 Intent intent = null;
 
-                if (result.getCode() == 200) {
+                if(result.getStatus().equals("registered")){
                     if (account.getEmail() == null || account.getPassword() == null) {
                         intent = new Intent(RegisterActivity.this, UpdateAccountActivity.class);
                     } else {
                         intent = new Intent(RegisterActivity.this, FeedActivity.class);
                     }
-                } else if (result.getCode() == 409) {
+                } else if(result.getStatus().equals("exists")){
                     intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 }
 
