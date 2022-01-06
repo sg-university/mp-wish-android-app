@@ -114,8 +114,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         credentials.setAccessToken(authAccount.getAccessToken());
         Log.d("xxx", credentials.toString());
 
-        Controller<AuthenticationApi> controller = new Controller<>(AuthenticationApi.class);
-        Call<Result<Account>> call = controller.getApi().loginByHuaweiOpenId(credentials);
+        Controller<AuthenticationApi> loginController = new Controller<>(AuthenticationApi.class);
+        Call<Result<Account>> call = loginController.getApi().loginByHuaweiOpenId(credentials);
         call.enqueue(new Callback<Result<Account>>() {
             @Override
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Account account = result.getContent();
                 Intent intent = null;
 
-                if(result.getCode()==200){
+                if(result.getStatus().equals("logged_in")){
                     if (account.getEmail() == null || account.getPassword() == null) {
                         intent = new Intent(LoginActivity.this, UpdateAccountActivity.class);
                     } else {
