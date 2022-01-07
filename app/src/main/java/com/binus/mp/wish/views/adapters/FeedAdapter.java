@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.binus.mp.wish.R;
@@ -19,17 +17,17 @@ import com.binus.mp.wish.views.activities.FeedDetailActivity;
 import java.util.List;
 import java.util.UUID;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder>{
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
     private List<Post> listPosts;
 
-    public FeedAdapter(List<Post> list){
+    public FeedAdapter(List<Post> list) {
         this.listPosts = list;
     }
 
     @Override
     public FeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater =LayoutInflater.from(parent.getContext());
-        View listFeed = inflater.inflate(R.layout.list_feed,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View listFeed = inflater.inflate(R.layout.list_feed, parent, false);
         return new FeedViewHolder(listFeed);
     }
 
@@ -44,11 +42,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FeedDetailActivity.class);
-                intent.putExtra("id",holder.idPost+"");
+                intent.putExtra("id", holder.idPost.toString());
                 view.getContext().startActivity(intent);
             }
         });
-        Log.i("FeedActivity","post"+listPosts.size());
+        Log.i("FeedActivity", "post" + listPosts.size());
     }
 
     public List<Post> getListPosts() {
@@ -64,10 +62,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         return listPosts.size();
     }
 
-    public static class FeedViewHolder extends RecyclerView.ViewHolder{
-        TextView title,description,author,create_at;
+    public static class FeedViewHolder extends RecyclerView.ViewHolder {
+        TextView title, description, author, create_at;
         UUID idPost;
         Button readBtn;
+
         public FeedViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titlePost);

@@ -1,11 +1,9 @@
 package com.binus.mp.wish.views.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.binus.mp.wish.R;
 import com.binus.mp.wish.views.activities.menufragments.CreatePostFragment;
@@ -19,6 +17,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     FeedFragment homeFragment;
     ProfileFragment profileFragment;
     CreatePostFragment createPostFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +35,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.home){
+        if (item.getItemId() == R.id.home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
             return true;
-        }else if(item.getItemId() == R.id.profile){
+        } else if (item.getItemId() == R.id.profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
             return true;
-        }else if(item.getItemId() == R.id.add){
+        } else if (item.getItemId() == R.id.add) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, createPostFragment).commit();
             return true;
         }
-
 
         return false;
     }

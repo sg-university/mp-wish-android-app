@@ -1,18 +1,16 @@
 package com.binus.mp.wish.views.activities.menufragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.binus.mp.wish.R;
 
 
 public class CreatePostFragment extends Fragment {
-
 
 
     public CreatePostFragment() {

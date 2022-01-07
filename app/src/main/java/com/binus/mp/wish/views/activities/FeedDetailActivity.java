@@ -1,8 +1,5 @@
 package com.binus.mp.wish.views.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,16 +10,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.binus.mp.wish.R;
+import com.binus.mp.wish.apis.AccountApi;
 import com.binus.mp.wish.apis.PostApi;
 import com.binus.mp.wish.contracts.Result;
 import com.binus.mp.wish.controllers.Controller;
+import com.binus.mp.wish.models.Account;
 import com.binus.mp.wish.models.Post;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -30,12 +28,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FeedDetailActivity extends AppCompatActivity {
-    TextView title,author,content,date;
+    TextView title, author, content, date;
     ImageButton backBtn;
     RecyclerView rv;
     EditText et;
     Button commentBtn;
     ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,7 @@ public class FeedDetailActivity extends AppCompatActivity {
         et = findViewById(R.id.detailET);
         commentBtn = findViewById(R.id.detailBtn);
         rv = findViewById(R.id.detailRv);
-        Log.i("Test","UUID : " +id);
+        Log.i("Test", "UUID : " + id);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please wait for a moment...");
         dialog.setCancelable(false);
@@ -62,33 +61,51 @@ public class FeedDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<Result<Post>>() {
             @Override
             public void onResponse(Call<Result<Post>> call, Response<Result<Post>> response) {
-                if(response.isSuccessful()){
-                    Result<Post> post = response.body();
-                    initPost(post.getContent());
-                }else{
-                    Log.i("FeedDetailActivity","error : "+response.code());
-
+                if (response.isSuccessful()) {
+                    Result<Post> result = response.body();
+                    assert result != null;
+                    if(result.getStatus().equals("read")){
+                        initPost(result.getContent());
+                    }
+                } else {
+                    Log.i("FeedDetailActivity", "error : " + response.code());
                 }
+                dialog.hide();
             }
 
             @Override
             public void onFailure(Call<Result<Post>> call, Throwable t) {
-
+                t.printStackTrace();
+                dialog.hide();
             }
         });
 
     }
 
-    private void initPost(Post post){
+    private void initPost(Post post) {
         title.setText(post.getTitle());
-//        author.setText(post.);
+        Controller<AccountApi> accountController = new Controller<>(AccountApi.class);
+        Call<Result<Account>> accountCall = accountController.getApi().readOne(post.getCreatorAccountId());
+        accountCall.enqueue(new Callback<Result<Account>>() {
+            @Override
+            public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
+                Result<Account> result = response.body();
+                assert result != null;
+                author.setText(result.getContent().getName());
+            }
+
+            @Override
+            public void onFailure(Call<Result<Account>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
         content.setText(post.getContent());
-        date.setText(post.getCreatedAt().getDate());
+        date.setText(post.getCreatedAt().toString());
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),HomeActivity.class);
+                Intent intent = new Intent(view.getContext(), HomeActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -102,7 +119,6 @@ public class FeedDetailActivity extends AppCompatActivity {
         et = findViewById(R.id.detailET);
         commentBtn = findViewById(R.id.detailBtn);
         rv = findViewById(R.id.detailRv);
-        dialog.hide();
     }
 
 
