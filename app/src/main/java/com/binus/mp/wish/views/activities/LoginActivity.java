@@ -1,4 +1,4 @@
-package com.binus.mp.wish.views.activities;
+ package com.binus.mp.wish.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
