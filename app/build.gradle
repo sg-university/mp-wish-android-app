@@ -19,7 +19,7 @@ android {
 
     signingConfigs {
         config {
-            storeFile file('C:\\Data\\University\\Semester 5\\Mobile Programming\\Final Project\\wish-key-store.jks')
+            storeFile file('C:/Data/University/Semester 5/Mobile Programming/Final Project/wish-key-store.jks')
             storePassword 'binusmpwish'
             keyPassword 'binusmpwish'
             keyAlias 'wish-key-store'
@@ -52,10 +52,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.huawei.hms:push:5.0.4.302'
     implementation 'com.huawei.hms:hwid:6.0.1.300'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 apply plugin: 'com.huawei.agconnect'

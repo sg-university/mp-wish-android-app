@@ -29,10 +29,17 @@
 -keep class com.huawei.updatesdk.**{*;}
 -keep class com.huawei.hms.**{*;}
 
+-keepattributes SourceFileLineNumberTable
+
+
+
+
+
+
+
+
+
+
+
 -keepattributes SourceFileLineNumberTable,
-
-
-
-
-
 

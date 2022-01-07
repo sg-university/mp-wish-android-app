@@ -14,14 +14,14 @@ import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 public interface PostGovernorApi {
     public static String ENDPOINT = "postGovernors";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> readOne(@Query("id") UUID id);
+    Call<Result<PostGovernor>> readOne(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<PostGovernor>>> readAll();
@@ -33,11 +33,11 @@ public interface PostGovernorApi {
     Call<Result<PostGovernor>> createOne(@Body PostGovernor postGovernorToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> updateOne(@Query("id") UUID id, @Body PostGovernor postGovernorToUpdate);
+    Call<Result<PostGovernor>> updateOne(@Path("id") UUID id, @Body PostGovernor postGovernorToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> patchOne(@Query("id") UUID id, @Body PostGovernor postGovernorToPatch);
+    Call<Result<PostGovernor>> patchOne(@Path("id") UUID id, @Body PostGovernor postGovernorToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> deleteOne(@Query("id") UUID id);
+    Call<Result<PostGovernor>> deleteOne(@Path("id") UUID id);
 }

@@ -14,14 +14,14 @@ import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 public interface PostApi {
     public static String ENDPOINT = "posts";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<Post>> readOne(@Query("id") UUID id);
+    Call<Result<Post>> readOne(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<Post>>> readAll();
@@ -33,11 +33,11 @@ public interface PostApi {
     Call<Result<Post>> createOne(@Body Post postToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<Post>> updateOne(@Query("id") UUID id, @Body Post postToUpdate);
+    Call<Result<Post>> updateOne(@Path("id") UUID id, @Body Post postToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<Post>> patchOne(@Query("id") UUID id, @Body Post postToPatch);
+    Call<Result<Post>> patchOne(@Path("id") UUID id, @Body Post postToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<Post>> deleteOne(@Query("id") UUID id);
+    Call<Result<Post>> deleteOne(@Path("id") UUID id);
 }

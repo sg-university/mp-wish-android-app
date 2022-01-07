@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -21,7 +22,7 @@ public interface FundApi {
     public static String ENDPOINT = "funds";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<Fund>> readOne(@Query("id") UUID id);
+    Call<Result<Fund>> readOne(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<Fund>>> readAll();
@@ -33,11 +34,11 @@ public interface FundApi {
     Call<Result<Fund>> createOne(@Body Fund fundToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<Fund>> updateOne(@Query("id") UUID id, @Body Fund fundToUpdate);
+    Call<Result<Fund>> updateOne(@Path("id") UUID id, @Body Fund fundToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<Fund>> patchOne(@Query("id") UUID id, @Body Fund fundToPatch);
+    Call<Result<Fund>> patchOne(@Path("id") UUID id, @Body Fund fundToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<Fund>> deleteOne(@Query("id") UUID id);
+    Call<Result<Fund>> deleteOne(@Path("id") UUID id);
 }
