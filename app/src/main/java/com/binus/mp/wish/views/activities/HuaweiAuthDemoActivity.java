@@ -149,6 +149,8 @@ public class HuaweiAuthDemoActivity extends AppCompatActivity {
 	private void dealWithResultOfSignIn(AuthAccount authAccount) {
 		showLog("code:" + authAccount.getAuthorizationCode());
 		Log.i(TAG, "code:" + authAccount.getAuthorizationCode());
+
+
 		//TODO 获取到Code信息后，应用需要发送给应用服务器
 		//TODO After obtaining the Code information, the application needs to send it to the application server
 

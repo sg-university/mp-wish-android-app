@@ -10,9 +10,9 @@
         <activity android:name=".views.activities.FeedActivity" />
         <activity android:name=".views.activities.FeedDetailActivity" />
         <activity android:name=".views.activities.UpdateAccountActivity" android:exported="false" />
-        <activity android:name=".views.activities.LoginActivity" android:exported="false" />
-        <activity android:name=".views.activities.RegisterActivity" android:exported="false" />
         <activity android:name=".views.activities.MainActivity" android:exported="false" />
+        <activity android:name=".views.activities.RegisterActivity" android:exported="false" />
+        <activity android:name=".views.activities.LoginActivity" android:exported="false" />
         <activity android:name=".views.activities.HomeActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
