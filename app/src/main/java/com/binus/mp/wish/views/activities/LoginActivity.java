@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AccountAuthParams mAuthParam;
 
     HuaweiIdAuthButton buttonHuaweiAuth;
-    Button normalLoginBtn;
+    Button normalLoginBtn,goToRegister;
     TextView tvErrMsg;
     EditText username,password;
     ProgressDialog dialog;
@@ -61,6 +61,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         normalLoginBtn = findViewById(R.id.loginBtn);
         normalLoginBtn.setOnClickListener(this);
+
+        goToRegister = findViewById(R.id.goToRegisterBtn);
+        goToRegister.setOnClickListener(this);
+
     }
 
     @Override
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 boolean isValidate = validateInput();
                 if(isValidate){
+                    dialog = new ProgressDialog(this);
                     dialog.setMessage("Please wait for a moment...");
                     dialog.setCancelable(false);
                     dialog.setInverseBackgroundForced(false);
@@ -83,6 +88,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     tvErrMsg.setText(error);
                 }
 
+                break;
+            case R.id.goToRegisterBtn:
+                Intent intent = new Intent(this,RegisterActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -103,14 +112,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 assert result != null;
                 Account account = result.getContent();
+                //accountnya ga masuk
+
                 if(account == null){
                     String error = "Login Failed! Please Check your Account again!";
                     tvErrMsg.setText(error);
-                }
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    dialog.hide();
 
-                setAccountLogin(account);
-                LoginActivity.this.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                    setAccountLogin(account);
+                    LoginActivity.this.startActivity(intent);
+                }
+
             }
 
             @Override
@@ -121,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     //validasi input
     private boolean validateInput(){
-        if(username.getText().equals("") || password.getText().equals("")){
+        if(username.getText().toString().equals("") || password.getText().toString().equals("")){
             return false;
         }
         return true;

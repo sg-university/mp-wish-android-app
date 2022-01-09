@@ -97,4 +97,5 @@ public class Account {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

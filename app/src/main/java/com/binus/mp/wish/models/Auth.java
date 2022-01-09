@@ -5,14 +5,13 @@ public class Auth {
 
     private static Auth authUser;
 
-
-
     public synchronized static Auth getSession(){
         if(authUser == null){
             authUser = new Auth();
         }
         return authUser;
     }
+
     private Auth(){
         acc = new Account();
     }
