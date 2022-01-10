@@ -1,19 +1,24 @@
  package com.binus.mp.wish.views.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.binus.mp.wish.R;
 import com.binus.mp.wish.apis.AuthenticationApi;
+import com.binus.mp.wish.contracts.CredentialsByEmail;
 import com.binus.mp.wish.contracts.CredentialsByHuawei;
 import com.binus.mp.wish.contracts.Result;
 import com.binus.mp.wish.controllers.Controller;
 import com.binus.mp.wish.models.Account;
+import com.binus.mp.wish.models.Auth;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
@@ -35,7 +40,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AccountAuthParams mAuthParam;
 
     HuaweiIdAuthButton buttonHuaweiAuth;
-
+    Button normalLoginBtn,goToRegister;
+    TextView tvErrMsg;
+    EditText username,password;
+    ProgressDialog dialog;
     static final int REQUEST_CODE_SIGN_IN = 1000;
 
     @Override
@@ -45,6 +53,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         buttonHuaweiAuth = findViewById(R.id.activity_login_button_huawei_auth);
         buttonHuaweiAuth.setOnClickListener(this);
+        tvErrMsg = findViewById(R.id.errLoginMsg);
+
+        username = findViewById(R.id.usernameLogin);
+        password = findViewById(R.id.passwordLogin);
+
+
+        normalLoginBtn = findViewById(R.id.loginBtn);
+        normalLoginBtn.setOnClickListener(this);
+
+        goToRegister = findViewById(R.id.goToRegisterBtn);
+        goToRegister.setOnClickListener(this);
+
     }
 
     @Override
@@ -53,7 +73,73 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.activity_login_button_huawei_auth:
                 silentSignInByHwId();
                 break;
+            case R.id.loginBtn:
+
+                boolean isValidate = validateInput();
+                if(isValidate){
+                    dialog = new ProgressDialog(this);
+                    dialog.setMessage("Please wait for a moment...");
+                    dialog.setCancelable(false);
+                    dialog.setInverseBackgroundForced(false);
+                    dialog.show();
+                    normalLogin();
+                }else{
+                    String error = "Login Failed! Please Check your Account again!";
+                    tvErrMsg.setText(error);
+                }
+
+                break;
+            case R.id.goToRegisterBtn:
+                Intent intent = new Intent(this,RegisterActivity.class);
+                startActivity(intent);
+                break;
         }
+    }
+
+
+    //login normally without using huawei button
+    private void normalLogin(){
+        Controller<AuthenticationApi> controller = new Controller<>(AuthenticationApi.class);
+        String email = username.getText().toString();
+        String pass = password.getText().toString();
+        Call<Result<Account>> call = controller.getApi().loginByEmail(new CredentialsByEmail(email,pass));
+        //belum ada validasi kalau misalkan akun tidak ditemukan didalam database.
+        call.enqueue(new Callback<Result<Account>>() {
+            @Override
+            public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
+                Result<Account> result = response.body();
+                Log.d("xxx", String.valueOf(result));
+
+                assert result != null;
+                Account account = result.getContent();
+                //accountnya ga masuk
+
+                if(account == null){
+                    String error = "Login Failed! Please Check your Account again!";
+                    tvErrMsg.setText(error);
+                    dialog.hide();
+
+                }else{
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                    setAccountLogin(account);
+                    LoginActivity.this.startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Result<Account>> call, Throwable t) {
+
+            }
+        });
+    }
+    //validasi input
+    private boolean validateInput(){
+        if(username.getText().toString().equals("") || password.getText().toString().equals("")){
+            return false;
+        }
+        return true;
     }
 
     private void silentSignInByHwId() {
@@ -130,7 +216,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (account.getEmail() == null || account.getPassword() == null) {
                         intent = new Intent(LoginActivity.this, UpdateAccountActivity.class);
                     } else {
-                        intent = new Intent(LoginActivity.this, FeedActivity.class);
+                        setAccountLogin(account);
+                        intent = new Intent(LoginActivity.this, HomeActivity.class);
                     }
                     LoginActivity.this.startActivity(intent);
                 }
@@ -142,5 +229,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 t.printStackTrace();
             }
         });
+    }
+
+    //session setelah login akan diletakan di Class Auth yang singleton supaya bisa diakses semua class
+    private void setAccountLogin(Account account){
+        Auth auth = (Auth)this.getApplication();
+        auth.setAcc(account);
+//        Auth.getSession().setAcc(account);
+        dialog.hide();
     }
 }

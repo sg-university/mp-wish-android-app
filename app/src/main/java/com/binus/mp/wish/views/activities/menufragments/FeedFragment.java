@@ -16,6 +16,7 @@ import com.binus.mp.wish.R;
 import com.binus.mp.wish.apis.PostApi;
 import com.binus.mp.wish.contracts.Result;
 import com.binus.mp.wish.controllers.Controller;
+import com.binus.mp.wish.models.Auth;
 import com.binus.mp.wish.models.Post;
 import com.binus.mp.wish.views.adapters.FeedAdapter;
 
@@ -86,7 +87,10 @@ public class FeedFragment extends Fragment {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rv.setAdapter(adapter);
-        tvLoading.setText("Welcome Users!");
+
+        Auth auth = (Auth) getActivity().getApplication();
+
+        tvLoading.setText("Welcome "+ auth.getAcc().getName());
     }
 
     private void setListPost(List<Post> posts) {

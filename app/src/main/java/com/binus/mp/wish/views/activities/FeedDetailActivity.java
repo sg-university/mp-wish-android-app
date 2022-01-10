@@ -8,19 +8,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.binus.mp.wish.R;
 import com.binus.mp.wish.apis.AccountApi;
+import com.binus.mp.wish.apis.CommentApi;
 import com.binus.mp.wish.apis.PostApi;
 import com.binus.mp.wish.contracts.Result;
 import com.binus.mp.wish.controllers.Controller;
 import com.binus.mp.wish.models.Account;
+import com.binus.mp.wish.models.Auth;
+import com.binus.mp.wish.models.Comment;
 import com.binus.mp.wish.models.Post;
+import com.binus.mp.wish.views.adapters.CommentAdapter;
+import com.binus.mp.wish.views.adapters.FeedAdapter;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -34,13 +45,13 @@ public class FeedDetailActivity extends AppCompatActivity {
     EditText et;
     Button commentBtn;
     ProgressDialog dialog;
-
+    UUID id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_detail);
         Intent intent = getIntent();
-        UUID id = UUID.fromString(intent.getStringExtra("id"));
+        id = UUID.fromString(intent.getStringExtra("id"));
         title = findViewById(R.id.detailTitle);
         author = findViewById(R.id.detailAuthor);
         content = findViewById(R.id.detailContent);
@@ -49,6 +60,15 @@ public class FeedDetailActivity extends AppCompatActivity {
         et = findViewById(R.id.detailET);
         commentBtn = findViewById(R.id.detailBtn);
         rv = findViewById(R.id.detailRv);
+
+        et.getText();
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertComment();
+            }
+        });
+
         Log.i("Test", "UUID : " + id);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please wait for a moment...");
@@ -70,18 +90,90 @@ public class FeedDetailActivity extends AppCompatActivity {
                 } else {
                     Log.i("FeedDetailActivity", "error : " + response.code());
                 }
-                dialog.hide();
+
             }
 
             @Override
             public void onFailure(Call<Result<Post>> call, Throwable t) {
                 t.printStackTrace();
-                dialog.hide();
+
+            }
+        });
+        generateComment();
+    }
+
+    private void insertComment(){
+        String comment = et.getText().toString();
+        Account acc = ((Auth) this.getApplication()).getAcc();
+        Controller<CommentApi> controller = new Controller<>(CommentApi.class);
+        Comment comment1 = new Comment(UUID.randomUUID(),id,acc.getId(),comment, new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        Call<Result<Comment>> call = controller.getApi().createOne(comment1);
+        call.enqueue(new Callback<Result<Comment>>() {
+            @Override
+            public void onResponse(Call<Result<Comment>> call, Response<Result<Comment>> response) {
+                //success
+                refresh();
+            }
+
+            @Override
+            public void onFailure(Call<Result<Comment>> call, Throwable t) {
+
             }
         });
 
     }
 
+
+    private void generateComment(){
+        Controller<CommentApi> controller = new Controller<>(CommentApi.class);
+        HashMap<String,String> x = new HashMap<>();
+        x.put("post_id",id.toString());
+        Call<Result<List<Comment>>> call = controller.getApi().readAll(x);
+        call.enqueue(new Callback<Result<List<Comment>>>() {
+            @Override
+            public void onResponse(Call<Result<List<Comment>>> call, Response<Result<List<Comment>>> response) {
+                if (response.isSuccessful()) {
+                    dialog.hide();
+                    Result<List<Comment>> result = response.body();
+                    assert result != null;
+                    if(result.getStatus().equals("read")){
+
+                        if(result.getContent() != null){
+                            initComment(result.getContent());
+                            Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
+//                            TextView tv = findViewById(R.id.commentMsg);
+//                            tv.setText("There is comment");
+                        }else{
+//                            TextView tv = findViewById(R.id.commentMsg);
+//                            tv.setText("No Comment now");
+                            Toast.makeText(FeedDetailActivity.this, "No comment now", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Log.i("FeedDetailActivity", "error : " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result<List<Comment>>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void refresh(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    private void initComment(List<Comment> comments){
+        CommentAdapter adapter = new CommentAdapter(comments);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter);
+
+    }
     private void initPost(Post post) {
         title.setText(post.getTitle());
         Controller<AccountApi> accountController = new Controller<>(AccountApi.class);
@@ -91,7 +183,7 @@ public class FeedDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
                 Result<Account> result = response.body();
                 assert result != null;
-                author.setText(result.getContent().getName());
+                setAuthor(result.getContent());
             }
 
             @Override
@@ -110,15 +202,11 @@ public class FeedDetailActivity extends AppCompatActivity {
             }
         });
 
-        title = findViewById(R.id.detailTitle);
-        author = findViewById(R.id.detailAuthor);
-        content = findViewById(R.id.detailContent);
-        date = findViewById(R.id.detailPostDate);
-        backBtn = findViewById(R.id.detailBackBtn);
 
-        et = findViewById(R.id.detailET);
-        commentBtn = findViewById(R.id.detailBtn);
-        rv = findViewById(R.id.detailRv);
+    }
+
+    private void setAuthor(Account acc){
+        author.setText(acc.getName());
     }
 
 
