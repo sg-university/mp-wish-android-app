@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import com.binus.mp.wish.models.Auth;
 import com.binus.mp.wish.models.Comment;
 import com.binus.mp.wish.models.Post;
 import com.binus.mp.wish.views.adapters.CommentAdapter;
-import com.binus.mp.wish.views.adapters.FeedAdapter;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -46,6 +44,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     Button commentBtn;
     ProgressDialog dialog;
     UUID id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +83,7 @@ public class FeedDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Result<Post> result = response.body();
                     assert result != null;
-                    if(result.getStatus().equals("read")){
+                    if (result.getStatus().equals("read")) {
                         initPost(result.getContent());
                     }
                 } else {
@@ -102,11 +101,12 @@ public class FeedDetailActivity extends AppCompatActivity {
         generateComment();
     }
 
-    private void insertComment(){
+    private void insertComment() {
         String comment = et.getText().toString();
-        Account acc = ((Auth) this.getApplication()).getAcc();
+        Auth auth = Auth.getInstance();
+        Account acc = auth.getAccount();
         Controller<CommentApi> controller = new Controller<>(CommentApi.class);
-        Comment comment1 = new Comment(UUID.randomUUID(),id,acc.getId(),comment, new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        Comment comment1 = new Comment(UUID.randomUUID(), id, acc.getId(), comment, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
         Call<Result<Comment>> call = controller.getApi().createOne(comment1);
         call.enqueue(new Callback<Result<Comment>>() {
             @Override
@@ -124,10 +124,10 @@ public class FeedDetailActivity extends AppCompatActivity {
     }
 
 
-    private void generateComment(){
+    private void generateComment() {
         Controller<CommentApi> controller = new Controller<>(CommentApi.class);
-        HashMap<String,String> x = new HashMap<>();
-        x.put("post_id",id.toString());
+        HashMap<String, String> x = new HashMap<>();
+        x.put("post_id", id.toString());
         Call<Result<List<Comment>>> call = controller.getApi().readAll(x);
         call.enqueue(new Callback<Result<List<Comment>>>() {
             @Override
@@ -136,14 +136,14 @@ public class FeedDetailActivity extends AppCompatActivity {
                     dialog.hide();
                     Result<List<Comment>> result = response.body();
                     assert result != null;
-                    if(result.getStatus().equals("read")){
+                    if (result.getStatus().equals("read")) {
 
-                        if(result.getContent() != null){
+                        if (result.getContent() != null) {
                             initComment(result.getContent());
                             Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
 //                            TextView tv = findViewById(R.id.commentMsg);
 //                            tv.setText("There is comment");
-                        }else{
+                        } else {
 //                            TextView tv = findViewById(R.id.commentMsg);
 //                            tv.setText("No Comment now");
                             Toast.makeText(FeedDetailActivity.this, "No comment now", Toast.LENGTH_SHORT).show();
@@ -161,19 +161,20 @@ public class FeedDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void refresh(){
+    private void refresh() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
 
-    private void initComment(List<Comment> comments){
+    private void initComment(List<Comment> comments) {
         CommentAdapter adapter = new CommentAdapter(comments);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
     }
+
     private void initPost(Post post) {
         title.setText(post.getTitle());
         Controller<AccountApi> accountController = new Controller<>(AccountApi.class);
@@ -205,7 +206,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setAuthor(Account acc){
+    private void setAuthor(Account acc) {
         author.setText(acc.getName());
     }
 

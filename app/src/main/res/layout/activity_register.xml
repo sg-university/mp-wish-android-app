@@ -6,98 +6,100 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".views.activities.RegisterActivity">
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/activity_login_text_view_title_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="186dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="191dp"
+        android:layout_marginBottom="23dp"
         android:text="Register"
+        android:textSize="60dp"
         android:textStyle="bold"
-        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/activity_register_button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Register"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_button_huawei_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/activity_register_button_go_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="@color/white"
+        android:text="Go To Login"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView16"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/line"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_edit_text_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton
+        android:id="@+id/activity_register_button_huawei_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_button_go_to_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/nameRegister"
+        android:id="@+id/activity_register_edit_text_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <EditText
-        android:id="@+id/usernameRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="28dp"
         android:hint="Email"
-        app:layout_constraintTop_toBottomOf="@+id/nameRegister"
-        tools:layout_editor_absoluteX="16dp" />
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_edit_text_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/passwordRegister"
+        android:id="@+id/activity_register_edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:inputType="textPassword"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:hint="Password"
-        app:layout_constraintTop_toBottomOf="@+id/usernameRegister"
-        tools:layout_editor_absoluteX="16dp" />
-    <EditText
-        android:id="@+id/confirmRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:inputType="textPassword"
-        android:hint="Confirm Password"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegister"
-        tools:layout_editor_absoluteX="16dp" />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_text_view_error_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/errRegisterMsg"
+        android:id="@+id/activity_register_text_view_error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:text=""
         android:textColor="@color/hwid_auth_button_color_red"
+        app:layout_constraintBottom_toTopOf="@+id/activity_register_button_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmRegister" />
-
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmRegister" />
-
-    <Button
-        android:id="@+id/toLoginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-
-        android:text="Back To Login"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerBtn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

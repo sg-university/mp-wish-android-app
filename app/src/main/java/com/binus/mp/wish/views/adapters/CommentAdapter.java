@@ -1,11 +1,9 @@
 package com.binus.mp.wish.views.adapters;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +14,6 @@ import com.binus.mp.wish.contracts.Result;
 import com.binus.mp.wish.controllers.Controller;
 import com.binus.mp.wish.models.Account;
 import com.binus.mp.wish.models.Comment;
-import com.binus.mp.wish.models.Post;
-import com.binus.mp.wish.views.activities.FeedDetailActivity;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,9 +25,12 @@ import retrofit2.Response;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
     private List<Comment> listComment;
     private Account accTemp;
+    private CommentViewHolder holder;
+
     public CommentAdapter(List<Comment> list) {
         this.listComment = list;
     }
+
 
     @Override
     public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,19 +41,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
+        this.holder = holder;
         Comment comment = listComment.get(position);
-
         UUID idAuth = comment.getCreatorAccountId();
         findAuthorComment(idAuth);
-
-        //authornya ga masuk
-        holder.author.setText(accTemp.getName());
-        holder.description.setText(accTemp.getName());
 
 //        Log.i("CommentAdapter", "post" + listComment.size());
     }
 
-    private void findAuthorComment(UUID idAuth){
+    private void findAuthorComment(UUID idAuth) {
         Controller<AccountApi> controller = new Controller<>(AccountApi.class);
         Call<Result<Account>> call = controller.getApi().readOne(idAuth);
         call.enqueue(new Callback<Result<Account>>() {
@@ -63,11 +58,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                 if (response.isSuccessful()) {
                     Result<Account> result = response.body();
                     assert result != null;
-                    if(result.getStatus().equals("read")){
+                    if (result.getStatus().equals("read")) {
                         Log.i("Comment Adapter", "result : not null");
                         setAccTemp(result.getContent());
-                    }else{
-                        Log.i("Comment Adapter","result : null");
+                    } else {
+                        Log.i("Comment Adapter", "result : null");
                     }
                 } else {
                     Log.i("CommentAdapter", "error : " + response.code());
@@ -80,9 +75,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             }
         });
     }
-    private void setAccTemp(Account account){
+
+    private void setAccTemp(Account account) {
         this.accTemp = account;
+        holder.author.setText(accTemp.getName());
+        holder.description.setText(accTemp.getName());
     }
+
     public List<Comment> getListComment() {
         return listComment;
     }
