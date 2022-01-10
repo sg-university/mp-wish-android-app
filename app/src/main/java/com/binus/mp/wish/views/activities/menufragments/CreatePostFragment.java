@@ -1,6 +1,5 @@
 package com.binus.mp.wish.views.activities.menufragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.binus.mp.wish.controllers.Controller;
 import com.binus.mp.wish.models.Account;
 import com.binus.mp.wish.models.Auth;
 import com.binus.mp.wish.models.Post;
-import com.binus.mp.wish.views.activities.LoginActivity;
-import com.binus.mp.wish.views.activities.RegisterActivity;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -59,15 +56,12 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
-
-
-
         return view;
     }
 
 
     private void insertPost(){
-        Account acc = Auth.getSession().getAcc();
+        Account acc = Auth.getInstance().getAccount();
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
         Post post = new Post(UUID.randomUUID(),acc.getId(),title,content,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));

@@ -88,22 +88,23 @@ public class FeedFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rv.setAdapter(adapter);
 
-        Auth auth = (Auth) getActivity().getApplication();
+        Auth auth = Auth.getInstance();
 
-        tvLoading.setText("Welcome "+ auth.getAcc().getName());
+        tvLoading.setText("Welcome "+ auth.getAccount().getName());
     }
 
     private void setListPost(List<Post> posts) {
+        // todo hapus add
         this.listPost = posts;
         Post newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
                 , "title", "content", new Timestamp(100), new Timestamp(100));
-        this.listPost.add(newPost);
+//        this.listPost.add(newPost);
         newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
                 , "title", "content", new Timestamp(100), new Timestamp(100));
-        this.listPost.add(newPost);
+//        this.listPost.add(newPost);
         newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
                 , "title", "content", new Timestamp(100), new Timestamp(100));
-        this.listPost.add(newPost);
+//        this.listPost.add(newPost);
         Log.i("FeedActivity", "post1 count : " + listPost.size());
     }
 }

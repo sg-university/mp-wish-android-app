@@ -3,27 +3,27 @@ package com.binus.mp.wish.models;
 import android.app.Application;
 
 public class Auth extends Application {
-    private Account acc;
+    private Account account;
 
-    private static Auth authUser;
+    private static Auth instance;
 
-    public synchronized static Auth getSession(){
-        if(authUser == null){
-            authUser = new Auth();
+    public synchronized static Auth getInstance() {
+        if (instance == null) {
+            instance = new Auth();
         }
-        return authUser;
+        return instance;
     }
 
-    public Auth(){
-        acc = new Account();
+    public Auth() {
+        account = new Account();
     }
 
-    public Account getAcc() {
-        return acc;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAcc(Account acc) {
-        this.acc = acc;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 }
