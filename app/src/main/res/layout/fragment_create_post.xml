@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Create New Post"
-        android:textSize="50sp"
+        android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
     <EditText
         android:id="@+id/descriptionET"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"

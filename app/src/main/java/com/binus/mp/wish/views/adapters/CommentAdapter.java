@@ -46,6 +46,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
         UUID idAuth = comment.getCreatorAccountId();
         findAuthorComment(idAuth);
+
+        //authornya ga masuk
         holder.author.setText(accTemp.getName());
         holder.description.setText(accTemp.getName());
 
@@ -62,7 +64,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                     Result<Account> result = response.body();
                     assert result != null;
                     if(result.getStatus().equals("read")){
+                        Log.i("Comment Adapter", "result : not null");
                         setAccTemp(result.getContent());
+                    }else{
+                        Log.i("Comment Adapter","result : null");
                     }
                 } else {
                     Log.i("CommentAdapter", "error : " + response.code());

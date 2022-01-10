@@ -6,14 +6,14 @@
             <action android:name="com.huawei.hms.core.aidlservice" />
         </intent>
     </queries>
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Wish">
+    <application android:allowBackup="true" android:name=".models.Auth" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Wish">
         <activity android:name=".views.activities.FeedActivity" />
         <activity android:name=".views.activities.FeedDetailActivity" />
         <activity android:name=".views.activities.UpdateAccountActivity" android:exported="false" />
-        <activity android:name=".views.activities.HomeActivity" android:exported="false" />
+        <activity android:name=".views.activities.MainActivity" android:exported="false" />
         <activity android:name=".views.activities.RegisterActivity" android:exported="false" />
         <activity android:name=".views.activities.LoginActivity" android:exported="false" />
-        <activity android:name=".views.activities.MainActivity" android:exported="true">
+        <activity android:name=".views.activities.HomeActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -233,7 +233,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //session setelah login akan diletakan di Class Auth yang singleton supaya bisa diakses semua class
     private void setAccountLogin(Account account){
-        Auth.getSession().setAcc(account);
+        Auth auth = (Auth)this.getApplication();
+        auth.setAcc(account);
+//        Auth.getSession().setAcc(account);
         dialog.hide();
     }
 }

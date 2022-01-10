@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,20 +36,29 @@ public class CreatePostFragment extends Fragment {
         // Required empty public constructor
     }
     EditText etTitle,etContent;
+    Button submit;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_post, container, false);
 
-        etTitle = view.findViewById(R.id.titlePost);
-        etContent = view.findViewById(R.id.descriptionPost);
+        etTitle = view.findViewById(R.id.titleET);
+        etContent = view.findViewById(R.id.descriptionET);
+        submit = view.findViewById(R.id.submitPost);
 
-        if(etTitle.getText().toString().isEmpty() || etContent.getText().toString().isEmpty()){
-            Toast.makeText(view.getContext(), "Title and Content must be inputted!", Toast.LENGTH_SHORT).show();
-        }else{
-            insertPost();
-        }
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(etTitle.getText().toString().isEmpty() || etContent.getText().toString().isEmpty()){
+                    Toast.makeText(view.getContext(), "Title and Content must be inputted!", Toast.LENGTH_SHORT).show();
+                }else{
+                    insertPost();
+                }
+            }
+        });
+
 
 
 
@@ -67,7 +77,7 @@ public class CreatePostFragment extends Fragment {
         call.enqueue(new Callback<Result<Post>>() {
             @Override
             public void onResponse(Call<Result<Post>> call, Response<Result<Post>> response) {
-//                createPostSuccess();
+                Toast.makeText(getActivity(), "Input Success!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -79,6 +89,6 @@ public class CreatePostFragment extends Fragment {
 //    private void createPostSuccess(){
 //        Intent intent = new Intent(view.getContext(), LoginActivity.class);
 //        startActivity(intent);
-//        Toast.makeText(view.getContext(), "Register Success!", Toast.LENGTH_SHORT).show();
+
 //    }
 }

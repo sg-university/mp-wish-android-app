@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -103,7 +104,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     private void insertComment(){
         String comment = et.getText().toString();
-        Account acc= Auth.getSession().getAcc();
+        Account acc = ((Auth) this.getApplication()).getAcc();
         Controller<CommentApi> controller = new Controller<>(CommentApi.class);
         Comment comment1 = new Comment(UUID.randomUUID(),id,acc.getId(),comment, new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
         Call<Result<Comment>> call = controller.getApi().createOne(comment1);
@@ -136,11 +137,16 @@ public class FeedDetailActivity extends AppCompatActivity {
                     Result<List<Comment>> result = response.body();
                     assert result != null;
                     if(result.getStatus().equals("read")){
+
                         if(result.getContent() != null){
                             initComment(result.getContent());
+                            Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
+//                            TextView tv = findViewById(R.id.commentMsg);
+//                            tv.setText("There is comment");
                         }else{
-                            TextView tv = findViewById(R.id.commentMsg);
-                            tv.setText("No Comment now");
+//                            TextView tv = findViewById(R.id.commentMsg);
+//                            tv.setText("No Comment now");
+                            Toast.makeText(FeedDetailActivity.this, "No comment now", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
@@ -177,7 +183,7 @@ public class FeedDetailActivity extends AppCompatActivity {
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
                 Result<Account> result = response.body();
                 assert result != null;
-                author.setText(result.getContent().getName());
+                setAuthor(result.getContent());
             }
 
             @Override
@@ -199,7 +205,9 @@ public class FeedDetailActivity extends AppCompatActivity {
 
     }
 
-
+    private void setAuthor(Account acc){
+        author.setText(acc.getName());
+    }
 
 
 }

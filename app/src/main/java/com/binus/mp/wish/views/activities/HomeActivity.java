@@ -6,10 +6,15 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.binus.mp.wish.R;
+import com.binus.mp.wish.models.Account;
+import com.binus.mp.wish.models.Auth;
 import com.binus.mp.wish.views.activities.menufragments.CreatePostFragment;
 import com.binus.mp.wish.views.activities.menufragments.FeedFragment;
 import com.binus.mp.wish.views.activities.menufragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.sql.Timestamp;
+import java.util.UUID;
 
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +31,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         homeFragment = new FeedFragment();
         profileFragment = new ProfileFragment();
         createPostFragment = new CreatePostFragment();
+
+
+        //dummy login
+        ((Auth) getApplication()).setAcc(
+                new Account(UUID.randomUUID(), "usernamez", "namez", "emailz", "passwordz", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())));
 
         nav = findViewById(R.id.bottomNav);
         nav.setOnNavigationItemSelectedListener(this);

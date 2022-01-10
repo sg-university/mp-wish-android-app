@@ -1,6 +1,8 @@
 package com.binus.mp.wish.models;
 
-public class Auth {
+import android.app.Application;
+
+public class Auth extends Application {
     private Account acc;
 
     private static Auth authUser;
@@ -12,7 +14,7 @@ public class Auth {
         return authUser;
     }
 
-    private Auth(){
+    public Auth(){
         acc = new Account();
     }
 
@@ -23,4 +25,5 @@ public class Auth {
     public void setAcc(Account acc) {
         this.acc = acc;
     }
+
 }
