@@ -116,10 +116,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 switch (result.getStatus()) {
                     case "logged_in":
-                        if (account.getEmail() == null || account.getPassword() == null) {
+                        setAccountLogin(account);
+                        if (account.getEmail() == null || account.getPassword() == null || account.getUsername() == null) {
                             intent = new Intent(LoginActivity.this, AccountActivity.class);
                         } else {
-                            setAccountLogin(account);
                             intent = new Intent(LoginActivity.this, HomeActivity.class);
                         }
                         break;
@@ -222,13 +222,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 switch (result.getStatus()) {
                     case "logged_in":
+                        setAccountLogin(account);
                         if (account.getEmail() == null || account.getPassword() == null) {
                             intent = new Intent(LoginActivity.this, AccountActivity.class);
                         } else {
                             if (account.getEmail().isEmpty() || account.getPassword().isEmpty()) {
                                 intent = new Intent(LoginActivity.this, AccountActivity.class);
                             }
-                            setAccountLogin(account);
                             intent = new Intent(LoginActivity.this, HomeActivity.class);
                         }
                         break;

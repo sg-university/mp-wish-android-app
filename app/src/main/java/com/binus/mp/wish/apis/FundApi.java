@@ -34,11 +34,11 @@ public interface FundApi {
     Call<Result<Fund>> createOne(@Body Fund fundToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<Fund>> updateOne(@Path("id") UUID id, @Body Fund fundToUpdate);
+    Call<Result<Fund>> updateOneById(@Path("id") UUID id, @Body Fund fundToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<Fund>> patchOne(@Path("id") UUID id, @Body Fund fundToPatch);
+    Call<Result<Fund>> patchOneById(@Path("id") UUID id, @Body Fund fundToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<Fund>> deleteOne(@Path("id") UUID id);
+    Call<Result<Fund>> deleteOneByIdById(@Path("id") UUID id);
 }

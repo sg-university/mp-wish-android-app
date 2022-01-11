@@ -33,11 +33,11 @@ public interface PostGovernorApi {
     Call<Result<PostGovernor>> createOne(@Body PostGovernor postGovernorToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> updateOne(@Path("id") UUID id, @Body PostGovernor postGovernorToUpdate);
+    Call<Result<PostGovernor>> updateOneById(@Path("id") UUID id, @Body PostGovernor postGovernorToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> patchOne(@Path("id") UUID id, @Body PostGovernor postGovernorToPatch);
+    Call<Result<PostGovernor>> patchOneById(@Path("id") UUID id, @Body PostGovernor postGovernorToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> deleteOne(@Path("id") UUID id);
+    Call<Result<PostGovernor>> deleteOneById(@Path("id") UUID id);
 }

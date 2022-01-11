@@ -44,6 +44,7 @@ public class FeedDetailActivity extends AppCompatActivity {
     Button commentBtn;
     ProgressDialog dialog;
     UUID id;
+    CommentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,6 @@ public class FeedDetailActivity extends AppCompatActivity {
                 } else {
                     Log.i("FeedDetailActivity", "error : " + response.code());
                 }
-
             }
 
             @Override
@@ -98,7 +98,21 @@ public class FeedDetailActivity extends AppCompatActivity {
 
             }
         });
-        generateComment();
+
+        adapter = new CommentAdapter();
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter);
+
+        adapter.getItemData().observe(this, data -> {
+            if (adapter.getItemCount() == 0) {
+                Toast.makeText(FeedDetailActivity.this, "No comment now", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fetchComments();
     }
 
     private void insertComment() {
@@ -112,19 +126,18 @@ public class FeedDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Result<Comment>> call, Response<Result<Comment>> response) {
                 //success
-                refresh();
+                fetchComments();
             }
 
             @Override
             public void onFailure(Call<Result<Comment>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
 
     }
 
-
-    private void generateComment() {
+    private void fetchComments() {
         Controller<CommentApi> controller = new Controller<>(CommentApi.class);
         HashMap<String, String> x = new HashMap<>();
         x.put("post_id", id.toString());
@@ -140,14 +153,10 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                         if (result.getContent() != null) {
                             initComment(result.getContent());
-                            Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
-//                            TextView tv = findViewById(R.id.commentMsg);
-//                            tv.setText("There is comment");
+                            //
                         } else {
-//                            TextView tv = findViewById(R.id.commentMsg);
-//                            tv.setText("No Comment now");
-                            Toast.makeText(FeedDetailActivity.this, "No comment now", Toast.LENGTH_SHORT).show();
-                        }
+                            //
+                         }
                     }
                 } else {
                     Log.i("FeedDetailActivity", "error : " + response.code());
@@ -161,18 +170,8 @@ public class FeedDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void refresh() {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }
-
     private void initComment(List<Comment> comments) {
-        CommentAdapter adapter = new CommentAdapter(comments);
-        rv.setHasFixedSize(true);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(adapter);
-
+        adapter.setItemData(comments);
     }
 
     private void initPost(Post post) {
@@ -202,8 +201,6 @@ public class FeedDetailActivity extends AppCompatActivity {
                 view.getContext().startActivity(intent);
             }
         });
-
-
     }
 
     private void setAuthor(Account acc) {

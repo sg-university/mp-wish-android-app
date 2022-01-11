@@ -33,11 +33,11 @@ public interface AccountApi {
     Call<Result<Account>> createOne(@Body Account accountToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<Account>> updateOne(@Path("id") UUID id, @Body Account accountToUpdate);
+    Call<Result<Account>> updateOneById(@Path("id") UUID id, @Body Account accountToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<Account>> patchOne(@Path("id") UUID id, @Body Account accountToPatch);
+    Call<Result<Account>> patchOneById(@Path("id") UUID id, @Body Account accountToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<Account>> deleteOne(@Path("id") UUID id);
+    Call<Result<Account>> deleteOneById(@Path("id") UUID id);
 }
