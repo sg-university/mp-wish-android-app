@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.binus.mp.wish.R;
@@ -15,6 +16,7 @@ import com.binus.mp.wish.controllers.Controller;
 import com.binus.mp.wish.models.Account;
 import com.binus.mp.wish.models.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,12 +25,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
-    private List<Comment> listComment;
     private Account accTemp;
     private CommentViewHolder holder;
+    MutableLiveData<List<Comment>> itemData;
 
-    public CommentAdapter(List<Comment> list) {
-        this.listComment = list;
+
+    public MutableLiveData<List<Comment>> getItemData() {
+        return itemData;
+    }
+
+    public void setItemData(List<Comment> itemData) {
+        this.itemData.setValue(itemData);
+        notifyDataSetChanged();
+    }
+
+    public CommentAdapter() {
+        this.itemData = new MutableLiveData<List<Comment>>();
+        this.itemData.setValue(new ArrayList<Comment>());
     }
 
     @Override
@@ -41,7 +54,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         this.holder = holder;
-        Comment comment = listComment.get(position);
+        Comment comment = this.itemData.getValue().get(position);
         UUID idAuth = comment.getCreatorAccountId();
         findAuthorComment(idAuth);
 
@@ -81,17 +94,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         holder.description.setText(accTemp.getName());
     }
 
-    public List<Comment> getListComment() {
-        return listComment;
-    }
-
-    public void setListComment(List<Comment> listComment) {
-        this.listComment = listComment;
-    }
 
     @Override
     public int getItemCount() {
-        return listComment.size();
+        return itemData.getValue().size();
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {

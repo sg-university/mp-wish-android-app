@@ -107,10 +107,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
                 Result<Account> result = response.body();
                 assert result != null;
-
+                Account account = result.getContent();
                 Intent intent = null;
                 switch (result.getStatus()) {
                     case "updated":
+                        auth.setAccount(account);
                         intent = new Intent(AccountActivity.this, HomeActivity.class);
                         break;
 
