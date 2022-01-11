@@ -21,7 +21,7 @@ public interface AccountApi {
     public static String ENDPOINT = "accounts";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<Account>> readOne(@Path("id") UUID id);
+    Call<Result<Account>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<Account>>> readAll();

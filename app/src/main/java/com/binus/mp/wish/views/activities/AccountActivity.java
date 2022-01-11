@@ -99,7 +99,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         accountToUpdate.setEmail(email);
         accountToUpdate.setPassword(password);
         Controller<AccountApi> accountController = new Controller<>(AccountApi.class);
-        Call<Result<Account>> accountCall = accountController.getApi().updateOneById(accountToUpdate.getId(), accountToUpdate);
+        Call<Result<Account>> accountCall = accountController.getApi().patchOneById(accountToUpdate.getId(), accountToUpdate);
 
         accountCall.enqueue(new Callback<Result<Account>>() {
 
@@ -110,7 +110,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 Account account = result.getContent();
                 Intent intent = null;
                 switch (result.getStatus()) {
-                    case "updated":
+                    case "patched":
                         auth.setAccount(account);
                         intent = new Intent(AccountActivity.this, HomeActivity.class);
                         break;

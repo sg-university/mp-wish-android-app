@@ -20,9 +20,7 @@ import com.binus.mp.wish.models.Auth;
 import com.binus.mp.wish.models.Post;
 import com.binus.mp.wish.views.adapters.FeedAdapter;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.UUID;
 import java.util.Vector;
 
 import retrofit2.Call;
@@ -49,7 +47,7 @@ public class FeedFragment extends Fragment {
         dialog.setMessage("Please wait for a moment...");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
-        dialog.show();
+//        dialog.show();
 
         listPost = new Vector<Post>();
         tvLoading = view.findViewById(R.id.welcomeTxt);
@@ -90,21 +88,11 @@ public class FeedFragment extends Fragment {
 
         Auth auth = Auth.getInstance();
 
-        tvLoading.setText("Welcome "+ auth.getAccount().getName());
+        tvLoading.setText("Welcome " + auth.getAccount().getName());
     }
 
     private void setListPost(List<Post> posts) {
-        // todo hapus add
         this.listPost = posts;
-        Post newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
-                , "title", "content", new Timestamp(100), new Timestamp(100));
-//        this.listPost.add(newPost);
-        newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
-                , "title", "content", new Timestamp(100), new Timestamp(100));
-//        this.listPost.add(newPost);
-        newPost = new Post(new UUID(100, 100), new UUID(11111, 1000)
-                , "title", "content", new Timestamp(100), new Timestamp(100));
-//        this.listPost.add(newPost);
-        Log.i("FeedActivity", "post1 count : " + listPost.size());
+        Log.i("FeedActivity", "post count : " + listPost.size());
     }
 }

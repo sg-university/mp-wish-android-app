@@ -21,7 +21,7 @@ public interface PostUpApi {
     public static String ENDPOINT = "post-ups";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<PostUp>> readOne(@Path("id") UUID id);
+    Call<Result<PostUp>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<PostUp>>> readAll();

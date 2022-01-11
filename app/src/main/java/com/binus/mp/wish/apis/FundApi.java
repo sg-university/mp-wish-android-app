@@ -22,7 +22,7 @@ public interface FundApi {
     public static String ENDPOINT = "funds";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<Fund>> readOne(@Path("id") UUID id);
+    Call<Result<Fund>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<Fund>>> readAll();

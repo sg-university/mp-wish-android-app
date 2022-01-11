@@ -69,15 +69,6 @@ public class FeedActivity extends AppCompatActivity {
     //UUID id, UUID creatorAccountId, String title, String content, Timestamp createdAt, Timestamp updatedAt
     private void setListPost(List<Post> posts) {
         this.listPost = posts;
-        Post newPost = new Post(UUID.randomUUID(), UUID.randomUUID()
-                , "title", "content", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
-        this.listPost.add(newPost);
-        newPost = new Post(UUID.randomUUID(), UUID.randomUUID()
-                , "title", "content", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
-        this.listPost.add(newPost);
-        newPost = new Post(UUID.randomUUID(), UUID.randomUUID()
-                , "title", "content", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
-        this.listPost.add(newPost);
-        Log.i("FeedActivity", "post1 count : " + listPost.size());
+        Log.i("FeedActivity", "postcount : " + listPost.size());
     }
 }

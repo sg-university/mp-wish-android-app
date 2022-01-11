@@ -55,15 +55,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         this.holder = holder;
         Comment comment = this.itemData.getValue().get(position);
-        UUID idAuth = comment.getCreatorAccountId();
-        findAuthorComment(idAuth);
+        UUID creatorAccountId = comment.getCreatorAccountId();
+        holder.content.setText(comment.getContent());
+        findAuthorComment(creatorAccountId);
 
 //        Log.i("CommentAdapter", "post" + listComment.size());
     }
 
     private void findAuthorComment(UUID idAuth) {
         Controller<AccountApi> controller = new Controller<>(AccountApi.class);
-        Call<Result<Account>> call = controller.getApi().readOne(idAuth);
+        Call<Result<Account>> call = controller.getApi().readOneById(idAuth);
         call.enqueue(new Callback<Result<Account>>() {
             @Override
             public void onResponse(Call<Result<Account>> call, Response<Result<Account>> response) {
@@ -90,8 +91,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     private void setAccTemp(Account account) {
         this.accTemp = account;
-        holder.author.setText(accTemp.getName());
-        holder.description.setText(accTemp.getName());
+        holder.accountName.setText(accTemp.getName());
     }
 
 
@@ -101,12 +101,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
-        TextView description, author;
+        TextView content, accountName;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            author = itemView.findViewById(R.id.commentAuthor);
-            description = itemView.findViewById(R.id.commentContent);
+            accountName = itemView.findViewById(R.id.comment_adapter_comment_account_name);
+            content = itemView.findViewById(R.id.comment_adapter_comment_content);
         }
     }
 }

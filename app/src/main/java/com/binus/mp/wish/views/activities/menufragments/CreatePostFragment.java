@@ -1,5 +1,6 @@
 package com.binus.mp.wish.views.activities.menufragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,63 +27,74 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class CreatePostFragment extends Fragment {
-
+public class CreatePostFragment extends Fragment implements View.OnClickListener {
 
     public CreatePostFragment() {
         // Required empty public constructor
     }
-    EditText etTitle,etContent;
-    Button submit;
+
+    EditText editTextTitle, editTextContent;
+    Button buttonCreate;
+    View viewCreatePostFragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_post, container, false);
+        viewCreatePostFragment = view;
 
-        etTitle = view.findViewById(R.id.titleET);
-        etContent = view.findViewById(R.id.descriptionET);
-        submit = view.findViewById(R.id.submitPost);
+        editTextTitle = view.findViewById(R.id.fragment_create_post_edit_text_title);
+        editTextContent = view.findViewById(R.id.fragment_create_post_edit_text_content);
+        buttonCreate = view.findViewById(R.id.fragment_create_post_button_create);
 
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(etTitle.getText().toString().isEmpty() || etContent.getText().toString().isEmpty()){
-                    Toast.makeText(view.getContext(), "Title and Content must be inputted!", Toast.LENGTH_SHORT).show();
-                }else{
-                    insertPost();
-                }
-            }
-        });
+        buttonCreate.setOnClickListener(this);
 
         return view;
     }
 
 
-    private void insertPost(){
+    private void createPost() {
         Account acc = Auth.getInstance().getAccount();
-        String title = etTitle.getText().toString();
-        String content = etContent.getText().toString();
-        Post post = new Post(UUID.randomUUID(),acc.getId(),title,content,new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()));
+        String title = editTextTitle.getText().toString();
+        String content = editTextContent.getText().toString();
+        Post post = new Post(UUID.randomUUID(), acc.getId(), title, content, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
 
         Controller<PostApi> controller = new Controller<>(PostApi.class);
         Call<Result<Post>> call = controller.getApi().createOne(post);
         call.enqueue(new Callback<Result<Post>>() {
             @Override
             public void onResponse(Call<Result<Post>> call, Response<Result<Post>> response) {
-                Toast.makeText(getActivity(), "Input Success!", Toast.LENGTH_SHORT).show();
+                Result<Post> result = response.body();
+                assert result != null;
+                switch (result.getStatus()) {
+                    case "created":
+                        Toast.makeText(getActivity(), "Create Success!", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "Create Failed", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
 
             @Override
             public void onFailure(Call<Result<Post>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
-//    private void createPostSuccess(){
-//        Intent intent = new Intent(view.getContext(), LoginActivity.class);
-//        startActivity(intent);
 
-//    }
+    @Override
+    public void onClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.fragment_create_post_button_create:
+                if (editTextTitle.getText().toString().isEmpty() || editTextContent.getText().toString().isEmpty()) {
+                    Toast.makeText(view.getContext(), "Title and Content must be inputted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    createPost();
+                }
+                break;
+        }
+    }
 }

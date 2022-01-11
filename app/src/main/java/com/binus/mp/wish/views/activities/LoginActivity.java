@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.binus.mp.wish.R;
 import com.binus.mp.wish.apis.AuthenticationApi;
@@ -23,6 +25,10 @@ import com.binus.mp.wish.models.Auth;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.BannerAdSize;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.banner.BannerView;
 import com.huawei.hms.common.ApiException;
 import com.huawei.hms.support.account.AccountAuthManager;
 import com.huawei.hms.support.account.request.AccountAuthParams;
@@ -65,6 +71,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         goToRegister = findViewById(R.id.activity_login_button_go_to_register);
         goToRegister.setOnClickListener(this);
 
+        // Initialize the HUAWEI Ads SDK.
+        HwAds.init(this);
+
+        // Obtain BannerView based on the configuration in layout/ad_fragment.xml.
+        BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
+        AdParam adParam = new AdParam.Builder().build();
+        bottomBannerView.loadAd(adParam);
+
+        // Call new BannerView(Context context) to create a BannerView class.
+        BannerView topBannerView = new BannerView(this);
+        topBannerView.setAdId("testw6vs28auh3");
+        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_SMART);
+        topBannerView.loadAd(adParam);
+
+        ConstraintLayout rootView = findViewById(R.id.root_view);
+        rootView.addView(topBannerView);
     }
 
     @SuppressLint("NonConstantResourceId")

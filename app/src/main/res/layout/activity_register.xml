@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hwads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".views.activities.RegisterActivity">
+    tools:context=".views.activities.RegisterActivity"
+    android:id="@+id/root_view">
+
+    <com.huawei.hms.ads.banner.BannerView
+        android:id="@+id/hw_banner_view"
+        hwads:adId="testw6vs28auh3"
+        hwads:bannerSize="BANNER_SIZE_360_57"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/activity_login_text_view_title_login"
