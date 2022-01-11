@@ -14,6 +14,10 @@ public class Auth extends Application {
         return instance;
     }
 
+    public synchronized static void deleteInstance() {
+        instance = null;
+    }
+
     public Auth() {
         account = new Account();
     }

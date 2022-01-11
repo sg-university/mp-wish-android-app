@@ -21,7 +21,7 @@ public interface CommentApi {
     public static String ENDPOINT = "comments";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<Comment>> readOne(@Path("id") UUID id);
+    Call<Result<Comment>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<Comment>>> readAll();

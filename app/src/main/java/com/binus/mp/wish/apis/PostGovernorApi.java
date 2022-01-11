@@ -21,7 +21,7 @@ public interface PostGovernorApi {
     public static String ENDPOINT = "postGovernors";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<PostGovernor>> readOne(@Path("id") UUID id);
+    Call<Result<PostGovernor>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<PostGovernor>>> readAll();

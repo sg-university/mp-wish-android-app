@@ -22,7 +22,7 @@ public interface CommentUpApi {
     public static String ENDPOINT = "comment-ups";
 
     @GET(ENDPOINT + "/{id}")
-    Call<Result<CommentUp>> readOne(@Path("id") UUID id);
+    Call<Result<CommentUp>> readOneById(@Path("id") UUID id);
 
     @GET(ENDPOINT + "")
     Call<Result<List<CommentUp>>> readAll();
