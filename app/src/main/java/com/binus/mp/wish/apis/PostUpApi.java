@@ -33,11 +33,11 @@ public interface PostUpApi {
     Call<Result<PostUp>> createOne(@Body PostUp postUpToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<PostUp>> updateOne(@Path("id") UUID id, @Body PostUp postUpToUpdate);
+    Call<Result<PostUp>> updateOneById(@Path("id") UUID id, @Body PostUp postUpToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<PostUp>> patchOne(@Path("id") UUID id, @Body PostUp postUpToPatch);
+    Call<Result<PostUp>> patchOneById(@Path("id") UUID id, @Body PostUp postUpToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<PostUp>> deleteOne(@Path("id") UUID id);
+    Call<Result<PostUp>> deleteOneById(@Path("id") UUID id);
 }

@@ -34,11 +34,11 @@ public interface CommentUpApi {
     Call<Result<CommentUp>> createOne(@Body CommentUp commentUpToCreate);
 
     @PUT(ENDPOINT + "/{id}")
-    Call<Result<CommentUp>> updateOne(@Path("id") UUID id, @Body CommentUp commentUpToUpdate);
+    Call<Result<CommentUp>> updateOneById(@Path("id") UUID id, @Body CommentUp commentUpToUpdate);
 
     @PATCH(ENDPOINT + "/{id}")
-    Call<Result<CommentUp>> patchOne(@Path("id") UUID id, @Body CommentUp commentUpToPatch);
+    Call<Result<CommentUp>> patchOneById(@Path("id") UUID id, @Body CommentUp commentUpToPatch);
 
     @DELETE(ENDPOINT + "/{id}")
-    Call<Result<CommentUp>> deleteOne(@Path("id") UUID id);
+    Call<Result<CommentUp>> deleteOneById(@Path("id") UUID id);
 }

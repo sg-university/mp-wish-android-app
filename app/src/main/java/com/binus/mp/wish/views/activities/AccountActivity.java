@@ -3,6 +3,7 @@ package com.binus.mp.wish.views.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText editTextName, editTextEmail, editTextPassword, editTextUsername;
-    Button buttonSubmit;
+    Button buttonUpdate;
 
     TextView textViewErrorMessage;
 
@@ -40,21 +41,30 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         editTextUsername = findViewById(R.id.activity_account_edit_text_username);
         editTextEmail = findViewById(R.id.activity_account_edit_text_email);
         editTextPassword = findViewById(R.id.activity_account_edit_text_password);
-        buttonSubmit = findViewById(R.id.activity_account_button_submit);
+        buttonUpdate = findViewById(R.id.activity_account_button_update);
         textViewErrorMessage = findViewById(R.id.activity_account_text_view_error_message);
 
-        buttonSubmit.setOnClickListener(this);
+        Auth auth = Auth.getInstance();
+        Account account = auth.getAccount();
+        editTextName.setText(account.getName());
+        editTextUsername.setText(account.getUsername());
+        editTextEmail.setText(account.getEmail());
+
+        buttonUpdate.setOnClickListener(this);
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.activity_account_button_submit:
+            case R.id.activity_account_button_update:
+                Log.d("xxx", "Account Update onclick");
                 Boolean isValidate = validateInput();
                 if (isValidate) {
+                    Log.d("xxx", "Account Update validated");
                     handleAccountUpdate();
                 } else {
+                    Log.d("xxx", "Account error");
                     String errorMessage = "Update Failed! Please Check your Account again!";
                     textViewErrorMessage.setText(errorMessage);
                 }
@@ -81,7 +91,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
-//        Auth auth = (Auth) this.getApplication();
+//      Auth auth = (Auth) this.getApplication();
         Auth auth = Auth.getInstance();
         Account accountToUpdate = auth.getAccount();
         accountToUpdate.setName(name);
@@ -89,7 +99,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         accountToUpdate.setEmail(email);
         accountToUpdate.setPassword(password);
         Controller<AccountApi> accountController = new Controller<>(AccountApi.class);
-        Call<Result<Account>> accountCall = accountController.getApi().updateOne(accountToUpdate.getId(), accountToUpdate);
+        Call<Result<Account>> accountCall = accountController.getApi().updateOneById(accountToUpdate.getId(), accountToUpdate);
 
         accountCall.enqueue(new Callback<Result<Account>>() {
 

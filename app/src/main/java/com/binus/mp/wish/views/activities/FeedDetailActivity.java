@@ -140,6 +140,7 @@ public class FeedDetailActivity extends AppCompatActivity {
 
                         if (result.getContent() != null) {
                             initComment(result.getContent());
+                            refresh();
                             Toast.makeText(FeedDetailActivity.this, "There is comment", Toast.LENGTH_SHORT).show();
 //                            TextView tv = findViewById(R.id.commentMsg);
 //                            tv.setText("There is comment");
