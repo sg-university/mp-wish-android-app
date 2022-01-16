@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.binus.mp.wish">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <queries>
         <intent>
             <action android:name="com.huawei.hms.core.aidlservice" />
         </intent>
     </queries>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.huawei.hms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission
+        android:name="android.permission.ACCESS_MOCK_LOCATION"
+        tools:ignore="MockLocation,ProtectedPermissions" />
 
     <application
         android:name=".models.Auth"
@@ -18,6 +33,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Wish">
+        <service
+            android:name=".services.LocationService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".views.activities.FeedUpdateActivity"
             android:exported="false" />
@@ -28,12 +48,6 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.MainActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".views.activities.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +55,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.LoginActivity"
+            android:exported="true" />
         <activity
             android:name=".views.activities.HomeActivity"
             android:exported="true" />
@@ -52,7 +72,16 @@
             android:name="com.huawei.hms.client.channel.androidMarket"
             android:value="false" />
 
-        <activity android:name=".views.activities.BannerActivity" />
+        <activity android:name=".views.activities.HuaweiBannerActivity" />
+        <activity
+            android:name=".views.activities.HuaweiRequestLocationUpdatesWithCallbackActivity"
+            android:configChanges="orientation|screenSize">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
     </application>
 
 </manifest>

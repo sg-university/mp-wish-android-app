@@ -11,14 +11,14 @@
 
     <com.huawei.hms.ads.banner.BannerView
         android:id="@+id/hw_banner_view"
-        hwads:adId="testw6vs28auh3"
-        hwads:bannerSize="BANNER_SIZE_360_57"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        hwads:adId="testw6vs28auh3"
+        hwads:bannerSize="BANNER_SIZE_360_57" />
 
     <TextView
         android:id="@+id/activity_login_text_view_title_login"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="75dp"
         android:backgroundTint="@color/white"
         android:text="Go To Login"
         android:textColor="@color/black"
