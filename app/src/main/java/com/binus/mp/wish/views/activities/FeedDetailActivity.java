@@ -98,9 +98,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null) {
-            readPost();
-        }
+        readPost();
     }
 
     private void readPost() {
@@ -118,7 +116,7 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
                         initPost(result.getContent());
                         Auth auth = Auth.getInstance();
                         Account account = auth.getAccount();
-                        if(post.getCreatorAccountId().equals(account.getId())){
+                        if (post.getCreatorAccountId().equals(account.getId())) {
                             buttonUpdate.setVisibility(View.VISIBLE);
                         }
                         Toast.makeText(FeedDetailActivity.this, "Read Success!", Toast.LENGTH_SHORT).show();
@@ -242,7 +240,6 @@ public class FeedDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.activity_feed_detail_button_update:
                 intent = new Intent(view.getContext(), FeedUpdateActivity.class);
                 intent.putExtra("postId", postId.toString());
-                view.getContext().startActivity(intent);
                 break;
             case R.id.activity_feed_detail_button_back:
                 intent = new Intent(view.getContext(), HomeActivity.class);

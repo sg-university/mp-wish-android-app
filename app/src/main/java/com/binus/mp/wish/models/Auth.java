@@ -1,9 +1,13 @@
 package com.binus.mp.wish.models;
 
 import android.app.Application;
+import android.location.Location;
+
+import java.util.List;
 
 public class Auth extends Application {
     private Account account;
+    List<Location> locations;
 
     private static Auth instance;
 
@@ -30,4 +34,15 @@ public class Auth extends Application {
         this.account = account;
     }
 
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public static void setInstance(Auth instance) {
+        Auth.instance = instance;
+    }
 }

@@ -9,17 +9,19 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.binus.mp.wish.R;
-import com.huawei.hms.ads.InterstitialAd;
+import com.binus.mp.wish.models.Auth;
+import com.binus.mp.wish.services.LocationService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    Button buttonLogin, buttonRegister, buttonBanner;
-    private InterstitialAd interstitialAd = null;
+    Auth auth;
+    Button buttonLogin, buttonRegister, buttonBanner, buttonLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = Auth.getInstance();
 
         buttonLogin = findViewById(R.id.activity_main_button_login);
         buttonRegister = findViewById(R.id.activity_main_button_register);
@@ -29,8 +31,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonBanner = findViewById(R.id.activity_main_button_banner);
         buttonBanner.setOnClickListener(this);
-    }
 
+        buttonLocation = findViewById(R.id.activity_main_button_location);
+        buttonLocation.setOnClickListener(this);
+
+//        Intent serviceIntent = new Intent(this, LocationService.class);
+//        startService(serviceIntent);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onClick(View view) {
@@ -43,7 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, RegisterActivity.class);
                 break;
             case R.id.activity_main_button_banner:
-                intent = new Intent(this, BannerActivity.class);
+                intent = new Intent(this, HuaweiBannerActivity.class);
+                break;
+            case R.id.activity_main_button_location:
+                intent = new Intent(this, HuaweiRequestLocationUpdatesWithCallbackActivity.class);
                 break;
         }
 

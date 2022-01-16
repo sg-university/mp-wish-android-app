@@ -17,12 +17,12 @@ import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.BannerAdSize;
 import com.huawei.hms.ads.banner.BannerView;
 
-public class BannerActivity extends AppCompatActivity {
+public class HuaweiBannerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banner);
+        setContentView(R.layout.activity_huawei_banner);
 
         // Initialize the HUAWEI Ads SDK.
         HwAds.init(this);
