@@ -25,6 +25,10 @@
         android:name="android.permission.ACCESS_MOCK_LOCATION"
         tools:ignore="MockLocation,ProtectedPermissions" />
 
+    <meta-data
+        android:name="com.huawei.hms.client.channel.androidMarket"
+        android:value="false" />
+
     <application
         android:name=".models.Auth"
         android:allowBackup="true"
